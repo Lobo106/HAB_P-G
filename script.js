@@ -27,9 +27,9 @@ let muyImportante = getListMuyImportante() ?? [];
 let importante = getListImportante() ?? [];
 let normal = getListNormal() ?? [];
 
-let idMI = muyImportante.length -1;
-let idI = importante.length -1;
-let idN = normal.length -1;
+let idMI = muyImportante.length - 1;
+let idI = importante.length - 1;
+let idN = normal.length - 1;
 console.log(idMI);
 console.log(idI)
 console.log(idN)
@@ -175,23 +175,23 @@ function getListNormal() {
 function generarLiMuyImportante(taskText, time, id, tic) {
     //Crear el li
     let clase = "";
-    if(tic === "checked"){ clase = "terminada"};
+    if (tic === "checked") { clase = "terminada" };
 
     let li = `<li id = "${id}" class = "${clase}">
-                      ${taskText}
+                      <p class = "tarea">${taskText}</p>
                       <input type="checkbox" ${tic}>
-                      Tarea añadida el ${time}</li> `;
+                      <p class = "tiempo">Tarea añadida el ${time}</p></li> `;
     listaMuyImportante.insertAdjacentHTML("beforeend", li);
 }
 
 function generarLiImportante(taskText, time, id, tic) {
     //Crear el li
     let clase = "";
-    if(tic === "checked"){ clase = "terminada"};
+    if (tic === "checked") { clase = "terminada" };
     let li = `<li id = "${id}" class = "${clase}">
-                      ${taskText}
-                      <input type="checkbox" ${tic}>
-                      Tarea añadida el ${time}</li> `;
+    <p class = "tarea">${taskText}</p>
+    <input type="checkbox" ${tic}>
+    <p class = "tiempo">Tarea añadida el ${time}</p></li> `;
     listaImportante.insertAdjacentHTML("beforeend", li);
 
 }
@@ -199,24 +199,36 @@ function generarLiImportante(taskText, time, id, tic) {
 function generarLiNormal(taskText, time, id, tic) {
     //Crear el li
     let clase = "";
-    if(tic === "checked"){ clase = "terminada"};
+    if (tic === "checked") { clase = "terminada" };
     let li = `<li id = "${id}" class = "${clase}">
-                      ${taskText}
-                      <input type="checkbox"${tic}>
-                      Tarea añadida el ${time}</li> `;
+    <p class = "tarea">${taskText}</p>
+    <input type="checkbox" ${tic}>
+    <p class = "tiempo">Tarea añadida el ${time}</p></li> `;;
     listaNormal.insertAdjacentHTML("beforeend", li);
 
 }
 
 //Función que elimina las tareas terminadas
 
-function deleteTaskMuyImportante() {
-    let terminado = document.querySelector(".terminada")
-    //     let id = terminado.id
-    //  .remove(muyImportante[id]);
-    terminado.remove(terminado)
-saveList()
-   ;
+function deleteTask() {
+
+    for (let i = 0; i < (muyImportante.length + importante.length + normal.length); i++) {
+        try {
+            let terminado = document.querySelector(".terminada")
+            terminado.remove()
+        } catch (error) {
+        }
+
+        let sinTicMI = muyImportante.filter((muyImportante) => muyImportante.tic !== "checked")
+        muyImportante = sinTicMI
+        let sinTicI = importante.filter((importante) => importante.tic !== "checked")
+        importante = sinTicI
+        let sinTicN = normal.filter((normal) => normal.tic !== "checked")
+        normal = sinTicN
+
+    }
+    saveList()
+        ;
 
 }
 
@@ -244,20 +256,37 @@ document.addEventListener("keyup", function (enter) {
         submitForm
     }
 });
-buttonDelete.addEventListener("click", deleteTaskMuyImportante);
+buttonDelete.addEventListener("click", deleteTask);
+
+
+
+
 
 
 listaMuyImportante.addEventListener("click", function (tarea) {
     let element = tarea.target
-
+    let numeroVueltas = [...muyImportante].pop()
+    let numero = numeroVueltas.id
+    numero = numero * 1
     if (element.checked) {
         element.parentNode.classList.add("terminada")
-        muyImportante[element.parentNode.id].tic = "checked";
+
+        for (let i = 0; i < 10; i++) {
+            console.log(i);
+            if (muyImportante[i].id == element.parentNode.id) {
+                muyImportante[i].tic = "checked";
+            }
+        }
         saveList();
     }
     else {
         element.parentNode.classList.remove("terminada")
-        muyImportante[element.parentNode.id].tic = "";
+
+        for (let i = 0; i < 10; i++) {
+            if (muyImportante[i].id == element.parentNode.id) {
+                muyImportante[i].tic = "";
+            }
+        }
         saveList();
     }
 });
