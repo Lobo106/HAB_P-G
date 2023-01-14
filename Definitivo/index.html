@@ -26,9 +26,9 @@
     <form>
         <label for="taskText"></label>
         <input type="text" name="taskText" autocomplete="off" placeholder="Escribe aquí tu nueva tarea" id="tasktText">
-        <button>Añadir</button>
+        <button onmousedown="sonido.play()">Añadir</button>
         <button type="button" id="botonOrden">!</button>
-        <button type ="button" id="botonEliminar">Eliminar tareas terminadas</button>
+        <button type ="button" id="botonEliminar" onmousedown="sonido2.play()">Eliminar tareas terminadas</button>
         <ul>
             <li><label for="normal">Normal</label>
                 <input type="radio" name="orden" id="normal" value="normal"disabled />
