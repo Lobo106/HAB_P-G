@@ -336,3 +336,8 @@ listaNormal.addEventListener("click", function (tarea) {
         saveList();
     }
     });
+        var sonido = new Audio();
+        sonido.src = "sonido.mp3";
+
+        var sonido2 = new Audio();
+        sonido2.src = "sonido2.mp3";
