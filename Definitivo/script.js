@@ -3,7 +3,6 @@
 //Elementos seleccionados del HTML
 const button = document.querySelector("button");
 const buttonDelete = document.getElementById("botonEliminar")
-const buttonOrder = document.getElementById("botonOrden")
 const [form] = document.forms
 const listaMuyImportante = document.getElementById("listaTareasMuyImportante");
 const listaImportante = document.getElementById("listaTareasImportante");
@@ -12,6 +11,12 @@ const muyImportanteRadio = document.getElementById("muyImportante")
 const importanteRadio = document.getElementById("importante")
 const normalRadio = document.getElementById("normal")
 
+var sonido = new Audio();
+sonido.src = "sonido.mp3";
+
+var sonido2 = new Audio();
+sonido2.src = "sonido2.mp3";
+
 
 //Variables para obtener la fecha
 
@@ -19,7 +24,7 @@ let today = new Date();
 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 options.timeZone = 'UTC';
 let now = today.toLocaleString('es-ES', options);
-console.log(now);
+
 
 
 //Listas donde se guardan las nuevas tareas
@@ -30,9 +35,7 @@ let normal = getListNormal() ?? [];
 let idMI = muyImportante.length - 1;
 let idI = importante.length - 1;
 let idN = normal.length - 1;
-console.log(idMI);
-console.log(idI)
-console.log(idN)
+
 //Esto recorre todo lo que haya en las listas que esté guardado en el localStorage y lo pone en las tareas pendientes
 
 //Funcion cargar lista
@@ -87,8 +90,10 @@ function submitForm(e) {
     //Limpiar el formulario
     form.reset(); //Hace lo mismo que un button type="reset"
 
+    sonido.play()
 
     let tic = "";
+
     if (orden === "muyImportante") {
         idMI++;
         //Y llama a la funcion que crea la tarea con la info que se ha metido en el form
@@ -215,43 +220,29 @@ function generarLiNormal(taskText, time, id, tic) {
 function deleteTask() {
 
 
-        try {[].forEach.call(document.querySelectorAll(".terminada"), function(regla){
+    try {
+        [].forEach.call(document.querySelectorAll(".terminada"), function (regla) {
             regla.parentNode.removeChild(regla);
         });
-        } catch (error) {
-        }
-        let sinTicMI = muyImportante.filter((muyImportante) => muyImportante.tic !== "checked")
-        muyImportante = sinTicMI
-        let sinTicI = importante.filter((importante) => importante.tic !== "checked")
-        importante = sinTicI
-        let sinTicN = normal.filter((normal) => normal.tic !== "checked")
-        normal = sinTicN
-
-    
-    saveList()
-        ;
-
-}
-
-//Función para habilitar y deshabilitar los botones de "Orden de importáncia"
-function disableRadio() {
-    let inactivo = normalRadio.hasAttribute("disabled");
-
-    if (inactivo) {
-        normalRadio.removeAttribute("disabled");
-        importanteRadio.removeAttribute("disabled");
-        muyImportanteRadio.removeAttribute("disabled");
-    } else {
-        normalRadio.setAttribute("disabled", true);
-        importanteRadio.setAttribute("disabled", true);
-        muyImportanteRadio.setAttribute("disabled", true);
+    } catch (error) {
     }
+    let sinTicMI = muyImportante.filter((muyImportante) => muyImportante.tic !== "checked")
+    muyImportante = sinTicMI
+    let sinTicI = importante.filter((importante) => importante.tic !== "checked")
+    importante = sinTicI
+    let sinTicN = normal.filter((normal) => normal.tic !== "checked")
+    normal = sinTicN
+sonido2.play();
+
+    saveList();
+
 }
+
 
 
 
 form.addEventListener("submit", submitForm);
-buttonOrder.addEventListener("click", disableRadio)
+
 document.addEventListener("keyup", function (enter) {
     if (enter.key == "Enter") {
         submitForm
@@ -261,16 +252,14 @@ buttonDelete.addEventListener("click", deleteTask);
 
 
 
-
-
-
 listaMuyImportante.addEventListener("click", function (tarea) {
     let element = tarea.target
     if (element.checked) {
         element.parentNode.classList.add("terminada")
 
         for (let i in muyImportante) {
-            if (muyImportante[i].id == element.parentNode.id ) {console.log(i)
+            if (muyImportante[i].id == element.parentNode.id) {
+                console.log(i)
                 muyImportante[i].tic = "checked";
             }
         }
@@ -293,23 +282,24 @@ listaImportante.addEventListener("click", function (tarea) {
 
     if (element.checked) {
         element.parentNode.classList.add("terminada")
-    for (let i in importante) {
-        if (importante[i].id == element.parentNode.id ) {console.log(i)
-            importante[i].tic = "checked";
+        for (let i in importante) {
+            if (importante[i].id == element.parentNode.id) {
+                console.log(i)
+                importante[i].tic = "checked";
+            }
         }
+        saveList();
     }
-    saveList();
-}
-else {
-    element.parentNode.classList.remove("terminada")
+    else {
+        element.parentNode.classList.remove("terminada")
 
-    for (let i in importante) {
-        if (importante[i].id == element.parentNode.id) {
-            importante[i].tic = "";
+        for (let i in importante) {
+            if (importante[i].id == element.parentNode.id) {
+                importante[i].tic = "";
+            }
         }
+        saveList();
     }
-    saveList();
-}
 });
 
 
@@ -319,7 +309,8 @@ listaNormal.addEventListener("click", function (tarea) {
     if (element.checked) {
         element.parentNode.classList.add("terminada")
         for (let i in normal) {
-            if (normal[i].id == element.parentNode.id ) {console.log(i)
+            if (normal[i].id == element.parentNode.id) {
+                console.log(i)
                 normal[i].tic = "checked";
             }
         }
@@ -327,7 +318,7 @@ listaNormal.addEventListener("click", function (tarea) {
     }
     else {
         element.parentNode.classList.remove("terminada")
-    
+
         for (let i in normal) {
             if (normal[i].id == element.parentNode.id) {
                 normal[i].tic = "";
@@ -335,9 +326,4 @@ listaNormal.addEventListener("click", function (tarea) {
         }
         saveList();
     }
-    });
-        var sonido = new Audio();
-        sonido.src = "sonido.mp3";
-
-        var sonido2 = new Audio();
-        sonido2.src = "sonido2.mp3";
+});
