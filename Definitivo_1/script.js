@@ -18,6 +18,15 @@ sonido.src = "sonido.mp3";
 var sonido2 = new Audio();
 sonido2.src = "sonido2.mp3";
 
+function iniciar() { 
+    var boton=document.getElementById('boton'); 
+    boton.addEventListener('click', presionar, false); 
+ } 
+ function presionar() { 
+    var audio4 =document.getElementById('audio4'); 
+    audio4.play(); 
+ } 
+ window.addEventListener('load', iniciar, false); 
 
 //Variables para obtener la fecha
 
@@ -28,7 +37,7 @@ let options2 = { year: 'numeric', month: 'numeric', day: 'numeric' }
 let now = today.toLocaleString('es-ES', options);
 let now2 = today.toLocaleString('es-ES', options2);
 
-
+//Hora y fecha en pantalla
 function actual() {
 
 
@@ -39,7 +48,7 @@ function actual() {
     let miReloj = `${hora}:${minuto}`;
     let miFecha = now2
 
-    reloj.textContent = miReloj;
+    reloj.innerHTML = miReloj;
     fecha.textContent = miFecha;
 
 }
@@ -255,8 +264,6 @@ function deleteTask() {
     importante = sinTicI
     let sinTicN = normal.filter((normal) => normal.tic !== "checked")
     normal = sinTicN
-
-    
         sonido2.play()
     
 
