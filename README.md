@@ -1,3 +1,3 @@
 # HAB_P-G
 Proyecto grupo G 
-hi
+Ivan Sanchéz. Jorge Manzanero. Luis De Marçay
