@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/jpg" href="/favicon.png"/>
     <title>Lista de tareas</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -20,37 +21,44 @@
 </head>
 
 <body>
-    <header>
+    <header> 
+        <ARTIcle class="play">    
+            <audio id="sonidoF"> 
+            <source src="sonidoF.mp3"> 
+            </audio> 
+            <button onmousedown="sonidoF.play()">Play</button>
+            <button onmousedown="sonidoF.pause()">Pause</button>
+    </ARTIcle>
         <h1>Tareas pendientes</h1>
     </header>
-    <audio id="sonidoF"> 
-        <source src="sonidoF.mp3"> 
-        </audio> 
-        <button onmousedown="sonidoF.play()">Play</button>
-        <button onmousedown="sonidoF.pause()">Pause</button> 
+   
+    <article class="fecha">
+     
     <div id = "hora"></div>
     <div id = "fecha"></div>
+    </article>
     <form>
         <label for="taskText"></label>
         <input type="text" name="taskText" autocomplete="off" placeholder="Escribe aquí tu nueva tarea" id="tasktText">
         <button>Agregar</button>
-        <button type ="button" id="botonEliminar">Eliminar tareas terminadas</button>
+        <button type ="button" id="botonEliminar">Eliminar tareas terminadas</button> 
+    
         <ul>
-            <li><label for="muyImportante">Muy Importante</label>
+            <li><label for="muyImportante" id="muyImportante">Urgente</label>
                 <input type="radio" name="orden" id="muyImportante" value="muyImportante"/>
             </li>
-            <li><label for="importante">Importante</label>
+            <li><label for="importante" id="Importante">Importante</label>
                 <input type="radio" name="orden" id="importante" value="importante"/>
             </li>
-            <li><label for="normal">Normal</label>
+            <li><label for="normal"id="normal">Normal</label>
                 <input type="radio" name="orden" id="normal" value="normal"/>
             </li>
         </ul>
     </form>
     <section>
-    <ul id="listaTareasMuyImportante"><H1>TAREAS MUY IMPORTANTES</H1></ul>
-    <ul id="listaTareasImportante"><H1>TAREAS IMPORTANTES</H1></ul>
-    <ul id="listaTareasNormal"><H1>TAREAS NORMALES</H1></ul>
+    <ul id="listaTareasMuyImportante"><H1 class="listaTareasMuyImportante">TAREAS URGENTES</H1></ul>
+    <ul id="listaTareasImportante"><H1 class="listaTareasImportante">TAREAS IMPORTANTES</H1></ul>
+    <ul id="listaTareasNormal"><H1 class="listaTareasNormal">TAREAS NORMALES</H1></ul>
     </section>
     <script src="./script.js"></script>
 </body>
