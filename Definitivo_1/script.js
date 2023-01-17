@@ -256,9 +256,9 @@ function deleteTask() {
     let sinTicN = normal.filter((normal) => normal.tic !== "checked")
     normal = sinTicN
 
-    if (!document.querySelectorAll(".terminada")) {
+    
         sonido2.play()
-    };
+    
 
     saveList();
 
